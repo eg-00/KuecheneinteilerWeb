@@ -1,0 +1,16 @@
+Tag,Tageszeit,KöcheLeiter,KöcheTeilnehmer,SpülerLeiter,SpülerTeilnehmer
+Montag,Frühstück,1,1,1,1
+Montag,Mittag,2,2,1,1
+Montag,Abend,1,2,2,1
+Dienstag,Frühstück,1,1,1,1
+Dienstag,Mittag,2,2,1,1
+Dienstag,Abend,1,2,2,1
+Mittwoch,Frühstück,1,1,1,1
+Mittwoch,Mittag,2,2,1,1
+Mittwoch,Abend,1,2,2,1
+Donnerstag,Frühstück,1,1,1,1
+Donnerstag,Mittag,2,2,1,1
+Donnerstag,Abend,1,2,2,1
+Freitag,Frühstück,1,1,1,1
+Freitag,Mittag,2,2,1,1
+Freitag,Abend,1,2,2,1
