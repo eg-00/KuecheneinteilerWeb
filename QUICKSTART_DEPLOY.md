@@ -16,7 +16,7 @@ Don't have time for the full guide? Here's the fastest way to get your app live:
 
 ## Step 2: Push Your Code (2 min)
 ```bash
-cd /Users/Emil.Gaeng/Documents/playground/KuecheneinteilerWeb
+cd /Users/XXX/Documents/playground/KuecheneinteilerWeb
 
 git add .
 git commit -m "Initial commit"

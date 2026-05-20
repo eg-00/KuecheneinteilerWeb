@@ -49,7 +49,7 @@ Run these commands in your terminal:
 
 ```bash
 # Navigate to project directory
-cd /Users/Emil.Gaeng/Documents/playground/KuecheneinteilerWeb
+cd /Users/XXX/Documents/playground/KuecheneinteilerWeb
 
 # Add your GitHub repository as remote
 # Replace YOUR_USERNAME with your GitHub username

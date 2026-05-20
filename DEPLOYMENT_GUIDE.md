@@ -36,7 +36,7 @@ After creation, you'll see the URL. Copy it (looks like: `https://github.com/YOU
 
 ### 2.1 Navigate to Project Directory
 ```bash
-cd /Users/Emil.Gaeng/Documents/playground/KuecheneinteilerWeb
+cd /Users/XXX/Documents/playground/KuecheneinteilerWeb
 ```
 
 ### 2.2 Verify Git is Initialized
