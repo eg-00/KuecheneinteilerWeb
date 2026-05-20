@@ -2,6 +2,10 @@
 
 A web-based kitchen duty assignment system with fair rotation algorithm. Complete conversion from Java to modern Vue 3 + TypeScript with Tailwind CSS.
 
+## 🚀 Live Demo
+
+**Try it online:** [Click here for live demo](https://github.com/YOUR_USERNAME/KuecheneinteilerWeb) (Deploy to GitHub Pages for live URL)
+
 ## Features
 
 ✅ **CSV File Upload** - Import people and meal requirements via drag-drop or file selection  
@@ -45,42 +49,58 @@ Output will be in `dist/` directory, ready for deployment to any static host (Ve
 
 ## Deployment
 
-### GitHub Pages (Recommended)
+### 🎯 Quick Start: Deploy to GitHub Pages
 
-Deploy automatically to GitHub Pages with GitHub Actions:
+**Time needed: ~10 minutes**
 
-1. **Create a GitHub repository:**
-   - Go to [github.com/new](https://github.com/new)
-   - Name: `KuecheneinteilerWeb`
-   - Make it **Public**
+Three documentation files are provided:
 
-2. **Push code:**
+1. **[QUICKSTART_DEPLOY.md](./QUICKSTART_DEPLOY.md)** - 5-minute quick start (easiest!)
+2. **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Comprehensive 8-step tutorial with troubleshooting
+3. **[GITHUB_PAGES_SETUP.md](./GITHUB_PAGES_SETUP.md)** - Complete setup checklist
+
+### Manual Deployment Steps
+
+1. **Create GitHub Repository:**
    ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
+   # Go to https://github.com/new
+   # Name: KuecheneinteilerWeb
+   # Visibility: Public
+   ```
+
+2. **Push Code:**
+   ```bash
    git remote add origin https://github.com/YOUR_USERNAME/KuecheneinteilerWeb.git
    git branch -M main
    git push -u origin main
    ```
 
 3. **Enable GitHub Pages:**
-   - Go to Settings → Pages
+   - Settings → Pages
    - Source: "Deploy from a branch"
-   - Branch: `gh-pages` / `(root)`
+   - Branch: `gh-pages` (auto-created after first deployment)
 
-4. **Access your app:**
+4. **Your app goes live at:**
    ```
    https://YOUR_USERNAME.github.io/KuecheneinteilerWeb/
    ```
 
-**For detailed step-by-step instructions, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**
-
 ### Other Hosting Options
 
-- **Vercel**: Zero-config deployment, automatic from GitHub
-- **Netlify**: Drag-and-drop `dist/` folder or connect GitHub repo
-- **Static Host** (AWS S3, Google Cloud Storage, etc.): Upload `dist/` contents
+- **Vercel**: Zero-config, connect your GitHub repo
+- **Netlify**: Drag-and-drop `dist/` folder
+- **AWS S3 + CloudFront**: Upload `dist/` folder
+- **Any static host**: Upload contents of `dist/` directory
+
+### GitHub Pages Features
+
+✅ **Automatic deployment** - Every push to `main` deploys automatically  
+✅ **Free hosting** - No costs for public repositories  
+✅ **HTTPS** - Automatically enabled  
+✅ **Global CDN** - Fast access worldwide  
+✅ **99.9% uptime** - Enterprise-grade reliability  
+
+**See deployment guides above for detailed step-by-step instructions.**
 
 ## Project Structure
 
