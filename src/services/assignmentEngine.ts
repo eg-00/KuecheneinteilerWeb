@@ -6,6 +6,10 @@
  * 1. Fewer assignments (more fair distribution)
  * 2. Longer time since last assignment
  * 3. Alphabetically (for determinism)
+ *
+ * Flexible allocation strategy (Approach A):
+ * - Leiter can fill Teilnehmer slots when Teilnehmer are insufficient
+ * - This ensures balanced workload across both types
  */
 
 import {
@@ -23,6 +27,7 @@ export class AssignmentEngine {
   private schedule: Schedule;
   private assignmentCount: Map<Person, number>;
   private lastAssignmentTime: Map<Person, number>;
+  private usedInRound: Set<Person> = new Set();
 
   constructor(people: Person[]) {
     this.people = [...people];
@@ -46,6 +51,8 @@ export class AssignmentEngine {
     let timeCounter = 0;
 
     for (const meal of meals) {
+      this.usedInRound.clear();
+
       // Assign cooks
       this.assignRole(meal, Role.COOKING, timeCounter);
       timeCounter++;
@@ -60,50 +67,90 @@ export class AssignmentEngine {
 
   /**
    * Assign people for a specific meal and role
+   * Uses flexible allocation: Leiter can fill Teilnehmer slots if needed
    */
   private assignRole(meal: Meal, role: Role, timeCounter: number): void {
     const requirement = role === Role.COOKING
       ? meal.cookingRequirement
       : meal.cleaningRequirement;
 
-    // Assign leaders
-    const assignedLeiter = this.selectPeople(PersonType.LEITER, requirement.leiter, meal, role, timeCounter);
+    // Step 1: Assign required Leiter (primary)
+    const assignedLeiter = this.selectPeopleFromType(
+      PersonType.LEITER,
+      requirement.leiter,
+      timeCounter
+    );
+
+    // Step 2: Assign required Teilnehmer (primary)
+    const assignedTeilnehmer = this.selectPeopleFromType(
+      PersonType.TEILNEHMER,
+      requirement.kinder,
+      timeCounter
+    );
+
+    // Step 3: If Teilnehmer are insufficient, try to fill with unused Leiter
+    const teilnehmerShortfall = requirement.kinder - assignedTeilnehmer.length;
+    if (teilnehmerShortfall > 0) {
+      const availableLeiter = this.people.filter(
+        p => p.type === PersonType.LEITER && !this.usedInRound.has(p)
+      );
+
+      const leiterToFillTeilnehmerSlots = this.selectFromCandidates(
+        availableLeiter,
+        teilnehmerShortfall,
+        timeCounter
+      );
+
+      assignedTeilnehmer.push(...leiterToFillTeilnehmerSlots);
+    }
+
+    // Add all assignments to schedule
     for (const person of assignedLeiter) {
       this.schedule.addAssignment(createAssignment(person, meal, role));
       this.updateTracking(person, timeCounter);
+      this.usedInRound.add(person);
     }
 
-    // Assign participants
-    const assignedTeilnehmer = this.selectPeople(PersonType.TEILNEHMER, requirement.kinder, meal, role, timeCounter);
     for (const person of assignedTeilnehmer) {
       this.schedule.addAssignment(createAssignment(person, meal, role));
       this.updateTracking(person, timeCounter);
+      this.usedInRound.add(person);
     }
   }
 
   /**
-   * Select the best people for a role based on fair rotation
+   * Select people of a specific type based on fair rotation criteria
+   */
+  private selectPeopleFromType(
+    type: PersonType,
+    count: number,
+    timeCounter: number
+  ): Person[] {
+    const availablePeople = this.people.filter(
+      p => p.type === type && !this.usedInRound.has(p)
+    );
+
+    return this.selectFromCandidates(availablePeople, count, timeCounter);
+  }
+
+  /**
+   * Select the best people from a candidate list based on fair rotation
    * Prioritizes:
-   * 1. People with fewer assignments
+   * 1. People with fewer total assignments
    * 2. People assigned longer ago
    * 3. Alphabetically for determinism
    */
-  private selectPeople(
-    type: PersonType,
+  private selectFromCandidates(
+    candidates: Person[],
     count: number,
-    meal: Meal,
-    role: Role,
     timeCounter: number
   ): Person[] {
-    // Filter people of the required type
-    const availablePeople = this.people.filter(p => p.type === type);
-
-    if (availablePeople.length === 0) {
+    if (candidates.length === 0) {
       return [];
     }
 
     // Sort by fair rotation criteria
-    const sorted = availablePeople.sort((a, b) => {
+    const sorted = candidates.sort((a, b) => {
       const countA = this.assignmentCount.get(a) || 0;
       const countB = this.assignmentCount.get(b) || 0;
 

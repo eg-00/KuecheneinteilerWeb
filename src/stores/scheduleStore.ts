@@ -54,6 +54,24 @@ export const useScheduleStore = defineStore('schedule', () => {
   const hasSchedule = computed(() => schedule.value !== null && schedule.value.size() > 0);
 
   /**
+   * Fairness ratio: 1.0 = perfect balance, 0.0 = very unbalanced
+   * Calculated as: 1 - (max_diff / avg)
+   * Where max_diff = max assignments - min assignments
+   */
+  const fairnessRatio = computed(() => {
+    const stats = getAssignmentStats();
+    const counts = Array.from(stats.values());
+
+    if (counts.length === 0) return 1.0;
+
+    const avg = counts.reduce((a, b) => a + b, 0) / counts.length;
+    if (avg === 0) return 1.0;
+
+    const maxDiff = Math.max(...counts) - Math.min(...counts);
+    return Math.max(0, 1.0 - (maxDiff / avg));
+  });
+
+  /**
    * Get assignment statistics
    */
   function getAssignmentStats(): Map<Person, number> {
@@ -310,6 +328,7 @@ Freitag,Abends,1,3,1,3`;
     isReady,
     assignmentStats,
     hasSchedule,
+    fairnessRatio,
 
     // Actions
     loadPeopleCsv,
