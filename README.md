@@ -4,7 +4,7 @@ A web-based kitchen duty assignment system with fair rotation algorithm. Complet
 
 ## 🚀 Live Demo
 
-**Try it online:** [Click here for live demo](https://github.com/YOUR_USERNAME/KuecheneinteilerWeb) (Deploy to GitHub Pages for live URL)
+**Try it online:** [Click here for live demo](https://eg-00.github.io/KuecheneinteilerWeb/) (Deploy to GitHub Pages for live URL)
 
 ## Features
 
