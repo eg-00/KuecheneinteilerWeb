@@ -1,0 +1,7 @@
+/*
+  X-Content-Type-Options: nosniff
+
+# Explicitly set CSV MIME type
+*.csv
+  Content-Type: text/csv
+  Cache-Control: public, max-age=3600
